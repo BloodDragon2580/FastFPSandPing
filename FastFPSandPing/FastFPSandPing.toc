@@ -1,0 +1,16 @@
+## Interface: 110002
+## Title:|cffd6266cFast FPS and Ping|r
+## Version: 1.0
+## Notes: Displays FPS and Server Ping in a movable frame.
+## Author: BloodDragon2580
+## SavedVariables: FastFPSandPingDB
+## IconTexture: Interface\AddOns\FastFPSandPing\Media\Texture\logo
+## OptionalDeps: LibDataBroker-1.1, LibDBIcon-1.0, AceDB-3.0
+
+Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
+Libs\AceDB-3.0\AceDB-3.0.lua
+
+FastFPSandPing.lua
+FastFPSandPingMiniMapButton.lua
+FastFPSandPingMiniMapButton.xml
