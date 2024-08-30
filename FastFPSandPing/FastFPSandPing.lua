@@ -1,3 +1,62 @@
+-- Localization table
+local L = {}
+L["enUS"] = {
+    title = "Fast FPS and Ping",
+    fpsText = "FPS",
+    pingText = "Ping",
+    clearMemoryButton = "Clear Memory",
+    memoryClearedMessage = "|cFFFF0000Memory cleared|r"  -- Red text
+}
+L["deDE"] = {
+    title = "Fast FPS and Ping",
+    fpsText = "FPS",
+    pingText = "Ping",
+    clearMemoryButton = "Speicher leeren",
+    memoryClearedMessage = "|cFFFF0000Speicher geleert|r"  -- Roter Text
+}
+L["frFR"] = {
+    title = "Fast FPS and Ping",
+    fpsText = "FPS",
+    pingText = "Ping",
+    clearMemoryButton = "Vider la mémoire",
+    memoryClearedMessage = "|cFFFF0000Mémoire vidée|r"  -- Texte en rouge
+}
+L["esES"] = {
+    title = "Fast FPS and Ping",
+    fpsText = "FPS",
+    pingText = "Ping",
+    clearMemoryButton = "Limpiar memoria",
+    memoryClearedMessage = "|cFFFF0000Memoria limpiada|r"  -- Texto rojo
+}
+L["itIT"] = {
+    title = "Fast FPS and Ping",
+    fpsText = "FPS",
+    pingText = "Ping",
+    clearMemoryButton = "Pulisci memoria",
+    memoryClearedMessage = "|cFFFF0000Memoria pulita|r"  -- Testo rosso
+}
+L["ptBR"] = {
+    title = "Fast FPS and Ping",
+    fpsText = "FPS",
+    pingText = "Ping",
+    clearMemoryButton = "Limpar memória",
+    memoryClearedMessage = "|cFFFF0000Memória limpa|r"  -- Texto vermelho
+}
+L["ruRU"] = {
+    title = "Fast FPS and Ping",
+    fpsText = "FPS",
+    pingText = "Пинг",
+    clearMemoryButton = "Очистить память",
+    memoryClearedMessage = "|cFFFF0000Память очищена|r"  -- Красный текст
+}
+-- Add more languages here as needed
+
+-- Get the player's locale
+local locale = GetLocale()
+
+-- Fallback to English if the player's locale is not supported
+local text = L[locale] or L["enUS"]
+
 -- Addon Name
 local addonName = "FastFPSandPing"
 local FastFPSandPing = CreateFrame("Frame", addonName, UIParent)
@@ -7,7 +66,7 @@ FastFPSandPingDB = FastFPSandPingDB or {}
 
 -- Create the main frame
 local FastFPSandPingFrame = CreateFrame("Frame", "FastFPSandPingFrame", UIParent)
-FastFPSandPingFrame:SetSize(200, 50)  -- Frame size
+FastFPSandPingFrame:SetSize(200, 70)  -- Frame size increased to accommodate the button
 
 -- Setting up the background manually
 local bg = FastFPSandPingFrame:CreateTexture(nil, "BACKGROUND")
@@ -39,7 +98,7 @@ end)
 -- Title Text
 local title = FastFPSandPingFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 title:SetPoint("TOP", FastFPSandPingFrame, "TOP", 0, -5)
-title:SetText("Fast FPS and Ping")
+title:SetText(text.title)
 
 -- FPS Text
 local fpsText = FastFPSandPingFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
@@ -48,6 +107,18 @@ fpsText:SetPoint("TOPLEFT", FastFPSandPingFrame, "TOPLEFT", 10, -25)  -- Positio
 -- Server Ping Text
 local pingText = FastFPSandPingFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 pingText:SetPoint("TOPRIGHT", FastFPSandPingFrame, "TOPRIGHT", -10, -25)  -- Positioned with some padding
+
+-- Memory Clear Button
+local clearMemoryButton = CreateFrame("Button", nil, FastFPSandPingFrame, "UIPanelButtonTemplate")
+clearMemoryButton:SetSize(180, 20)  -- Button size
+clearMemoryButton:SetPoint("BOTTOM", FastFPSandPingFrame, "BOTTOM", 0, 10)  -- Position button at the bottom
+clearMemoryButton:SetText(text.clearMemoryButton)
+
+-- OnClick script to clear memory
+clearMemoryButton:SetScript("OnClick", function()
+    collectgarbage("collect")
+    print(text.memoryClearedMessage)
+end)
 
 -- Slash command to toggle the frame
 SLASH_FASTFPSANDPING1 = "/ffap"
@@ -87,11 +158,11 @@ local function UpdateStats()
     end
 
     -- Set FPS text
-    fpsText:SetText(string.format("FPS: %.1f", fps))
+    fpsText:SetText(string.format("%s: %.1f", text.fpsText, fps))
     fpsText:SetTextColor(unpack(fpsColor))  -- Setze die Farbe basierend auf fpsColor
 
     -- Set Ping text
-    pingText:SetText(string.format("Ping: %d ms", latencyHome))
+    pingText:SetText(string.format("%s: %d ms", text.pingText, latencyHome))
     pingText:SetTextColor(unpack(pingColor))  -- Setze die Farbe basierend auf pingColor
 end
 
