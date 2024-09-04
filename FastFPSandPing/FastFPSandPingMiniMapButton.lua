@@ -3,44 +3,44 @@ local AceGUI = LibStub("AceGUI-3.0")
 -- Lokalisierte Texte für verschiedene Sprachen
 local localizedTexts = {
     enUS = {
-        Links = "Click left to open the FPS and Ping display.",
-        Rechts = "Hold right-click to move the Minimap button.",
+        FFPSLinks = "Click left to open the FPS and Ping display.",
+        FFPSRechts = "Hold right-click to move the Minimap button.",
     },
     deDE = {
-        Links = "Zum Öffnen der FPS- und Ping-Anzeige links klicken.",
-        Rechts = "Rechtsklick halten, um den Minikarten-Button zu verschieben.",
+        FFPSLinks = "Zum Öffnen der FPS- und Ping-Anzeige links klicken.",
+        FFPSRechts = "Rechtsklick halten, um den Minikarten-Button zu verschieben.",
     },
     frFR = {
-        Links = "Cliquez à gauche pour ouvrir l'affichage FPS et Ping.",
-        Rechts = "Maintenez le clic droit pour déplacer le bouton de la Minimap.",
+        FFPSLinks = "Cliquez à gauche pour ouvrir l'affichage FPS et Ping.",
+        FFPSRechts = "Maintenez le clic droit pour déplacer le bouton de la Minimap.",
     },
     esES = {
-        Links = "Haz clic a la izquierda para abrir la visualización de FPS et Ping.",
-        Rechts = "Mantén presionado el botón derecho para mover el botón del minimapa.",
+        FFPSLinks = "Haz clic a la izquierda para abrir la visualización de FPS et Ping.",
+        FFPSRechts = "Mantén presionado el botón derecho para mover el botón del minimapa.",
     },
     itIT = {
-        Links = "Clicca a sinistra per aprire la visualizzazione di FPS e Ping.",
-        Rechts = "Tieni premuto il tasto destro per spostare il pulsante della minimappa.",
+        FFPSLinks = "Clicca a sinistra per aprire la visualizzazione di FPS e Ping.",
+        FFPSRechts = "Tieni premuto il tasto destro per spostare il pulsante della minimappa.",
     },
     ruRU = {
-        Links = "Щелкните левой кнопкой, чтобы открыть отображение FPS и Ping.",
-        Rechts = "Удерживайте правую кнопку мыши, чтобы переместить кнопку миникарты.",
+        FFPSLinks = "Щелкните левой кнопкой, чтобы открыть отображение FPS и Ping.",
+        FFPSRechts = "Удерживайте правую кнопку мыши, чтобы переместить кнопку миникарты.",
     },
     zhCN = {
-        Links = "点击左侧以打开FPS和Ping显示。",
-        Rechts = "按住右键以移动小地图按钮。",
+        FFPSLinks = "点击左侧以打开FPS和Ping显示。",
+        FFPSRechts = "按住右键以移动小地图按钮。",
     },
     zhTW = {
-        Links = "點擊左側以打開FPS和Ping顯示。",
-        Rechts = "按住右鍵以移動小地圖按鈕。",
+        FFPSLinks = "點擊左側以打開FPS和Ping顯示。",
+        FFPSRechts = "按住右鍵以移動小地圖按鈕。",
     },
     koKR = {
-        Links = "왼쪽 클릭하여 FPS 및 핑 표시를 엽니다.",
-        Rechts = "오른쪽 클릭을 유지하여 미니맵 버튼을 이동합니다.",
+        FFPSLinks = "왼쪽 클릭하여 FPS 및 핑 표시를 엽니다.",
+        FFPSRechts = "오른쪽 클릭을 유지하여 미니맵 버튼을 이동합니다.",
     },
     ptBR = {
-        Links = "Clique à esquerda para abrir a exibição de FPS e Ping.",
-        Rechts = "Mantenha o clique direito para mover o botão do minimapa.",
+        FFPSLinks = "Clique à esquerda para abrir a exibição de FPS e Ping.",
+        FFPSRechts = "Mantenha o clique direito para mover o botão do minimapa.",
     },
     -- Weitere Sprachen können hier hinzugefügt werden
 }
@@ -52,12 +52,12 @@ local locale = GetLocale()
 print("Current Locale:", locale)
 
 -- Setze die Standardwerte, falls die Sprache nicht definiert ist
-_G["linksText"] = localizedTexts[locale] and localizedTexts[locale].Links or "Click left to open the FPS and Ping display."
-_G["rechtsText"] = localizedTexts[locale] and localizedTexts[locale].Rechts or "Hold right-click to move the Minimap button."
+_G["FFPSlinksText"] = localizedTexts[locale] and localizedTexts[locale].FFPSLinks or "Click left to open the FPS and Ping display."
+_G["FFPSrechtsText"] = localizedTexts[locale] and localizedTexts[locale].FFPSRechts or "Hold right-click to move the Minimap button."
 
 -- Debug-Ausgaben für die Textwerte
-print("LinksText:", _G["linksText"])
-print("RechtsText:", _G["rechtsText"])
+print("FFPSLinksText:", _G["FFPSlinksText"])
+print("FFPSRechtsText:", _G["FFPSrechtsText"])
 
 FastFPSandPing_Settings = {
 	MinimapPos = 45

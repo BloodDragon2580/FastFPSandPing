@@ -75,8 +75,8 @@
             </OnClick>
             <OnEnter>
                 GameTooltip:SetOwner(self, "ANCHOR_LEFT")
-                GameTooltip:AddLine(_G["linksText"])
-                GameTooltip:AddLine(_G["rechtsText"])
+                GameTooltip:AddLine(_G["FFPSlinksText"])
+                GameTooltip:AddLine(_G["FFPSrechtsText"])
                 GameTooltip:Show()
             </OnEnter>
             <OnLeave>
