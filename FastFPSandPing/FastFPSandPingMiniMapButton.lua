@@ -48,16 +48,9 @@ local localizedTexts = {
 -- Bestimme die aktuelle Sprache
 local locale = GetLocale()
 
--- Debug-Ausgaben für die Sprache
-print("Current Locale:", locale)
-
 -- Setze die Standardwerte, falls die Sprache nicht definiert ist
 _G["FFPSlinksText"] = localizedTexts[locale] and localizedTexts[locale].FFPSLinks or "Click left to open the FPS and Ping display."
 _G["FFPSrechtsText"] = localizedTexts[locale] and localizedTexts[locale].FFPSRechts or "Hold right-click to move the Minimap button."
-
--- Debug-Ausgaben für die Textwerte
-print("FFPSLinksText:", _G["FFPSlinksText"])
-print("FFPSRechtsText:", _G["FFPSrechtsText"])
 
 FastFPSandPing_Settings = {
 	MinimapPos = 45
