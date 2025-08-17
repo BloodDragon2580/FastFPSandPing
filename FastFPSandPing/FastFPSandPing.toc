@@ -1,6 +1,6 @@
 ## Interface: 110200
 ## Title:|cffd6266cFast FPS and Ping|r
-## Version: 6.1
+## Version: 6.3
 ## Notes: Displays FPS and Server Ping in a movable frame.
 ## Author: BloodDragon2580
 ## SavedVariables: FastFPSandPingDB
