@@ -5,86 +5,70 @@ L["enUS"] = {
     fpsText = "FPS",
     pingText = "Ping",
     clearMemoryButton = "Clear Memory",
-    memoryClearedMessage = "|cFFFF0000Memory cleared|r"  -- Red text
+    memoryClearedMessage = "|cFFFF0000Memory cleared|r"
 }
 L["deDE"] = {
     title = "Fast FPS and Ping",
     fpsText = "FPS",
     pingText = "Ping",
     clearMemoryButton = "Speicher leeren",
-    memoryClearedMessage = "|cFFFF0000Speicher geleert|r"  -- Roter Text
+    memoryClearedMessage = "|cFFFF0000Speicher geleert|r"
 }
 L["frFR"] = {
     title = "Fast FPS and Ping",
     fpsText = "FPS",
     pingText = "Ping",
     clearMemoryButton = "Vider la mémoire",
-    memoryClearedMessage = "|cFFFF0000Mémoire vidée|r"  -- Texte en rouge
+    memoryClearedMessage = "|cFFFF0000Mémoire vidée|r"
 }
 L["esES"] = {
     title = "Fast FPS and Ping",
     fpsText = "FPS",
     pingText = "Ping",
     clearMemoryButton = "Limpiar memoria",
-    memoryClearedMessage = "|cFFFF0000Memoria limpiada|r"  -- Texto rojo
+    memoryClearedMessage = "|cFFFF0000Memoria limpiada|r"
 }
 L["itIT"] = {
     title = "Fast FPS and Ping",
     fpsText = "FPS",
     pingText = "Ping",
     clearMemoryButton = "Pulisci memoria",
-    memoryClearedMessage = "|cFFFF0000Memoria pulita|r"  -- Testo rosso
+    memoryClearedMessage = "|cFFFF0000Memoria pulita|r"
 }
 L["ptBR"] = {
     title = "Fast FPS and Ping",
     fpsText = "FPS",
     pingText = "Ping",
     clearMemoryButton = "Limpar memória",
-    memoryClearedMessage = "|cFFFF0000Memória limpa|r"  -- Texto vermelho
+    memoryClearedMessage = "|cFFFF0000Memória limpa|r"
 }
 L["ruRU"] = {
     title = "Fast FPS and Ping",
     fpsText = "FPS",
     pingText = "Пинг",
     clearMemoryButton = "Очистить память",
-    memoryClearedMessage = "|cFFFF0000Память очищена|r"  -- Красный текст
+    memoryClearedMessage = "|cFFFF0000Память очищена|r"
 }
--- Add more languages here as needed
 
--- Get the player's locale
 local locale = GetLocale()
-
--- Fallback to English if the player's locale is not supported
 local text = L[locale] or L["enUS"]
 
--- Addon Name
 local addonName = "FastFPSandPing"
 local FastFPSandPing = CreateFrame("Frame", addonName, UIParent)
-
--- Variables for SavedVariables
 FastFPSandPingDB = FastFPSandPingDB or {}
 
--- Create the main frame
+local FADE_WHILE_MOVING = true
+
+-- Hauptframe
 local FastFPSandPingFrame = CreateFrame("Frame", "FastFPSandPingFrame", UIParent)
-FastFPSandPingFrame:SetSize(200, 70)  -- Frame size increased to accommodate the button
-
--- Setting up the background manually
-local bg = FastFPSandPingFrame:CreateTexture(nil, "BACKGROUND")
-bg:SetAllPoints(FastFPSandPingFrame)
-bg:SetColorTexture(0, 0, 0, 0.5)  -- Semi-transparent black background
-
-local border = CreateFrame("Frame", nil, FastFPSandPingFrame, BackdropTemplateMixin and "BackdropTemplate")
-border:SetPoint("TOPLEFT", FastFPSandPingFrame, "TOPLEFT", -8, 8)
-border:SetPoint("BOTTOMRIGHT", FastFPSandPingFrame, "BOTTOMRIGHT", 8, -8)
-border:SetBackdrop({
-    edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
-    edgeSize = 16,
-})
-border:SetBackdropBorderColor(1, 1, 1, 1)
-
-FastFPSandPingFrame:EnableMouse(true)
+FastFPSandPingFrame:SetSize(260, 110)
+FastFPSandPingFrame:SetPoint("CENTER")
 FastFPSandPingFrame:SetMovable(true)
+FastFPSandPingFrame:EnableMouse(true)
 FastFPSandPingFrame:RegisterForDrag("LeftButton")
+FastFPSandPingFrame:SetClampedToScreen(true)
+FastFPSandPingFrame:SetFrameStrata("MEDIUM")
+
 FastFPSandPingFrame:SetScript("OnDragStart", FastFPSandPingFrame.StartMoving)
 FastFPSandPingFrame:SetScript("OnDragStop", function(self)
     self:StopMovingOrSizing()
@@ -95,34 +79,89 @@ FastFPSandPingFrame:SetScript("OnDragStop", function(self)
     FastFPSandPingDB.yOfs = yOfs
 end)
 
--- Title Text
-local title = FastFPSandPingFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-title:SetPoint("TOP", FastFPSandPingFrame, "TOP", 0, -5)
-title:SetText(text.title)
+-- Hintergrund
+local bg = FastFPSandPingFrame:CreateTexture(nil, "BACKGROUND")
+bg:SetAllPoints()
+bg:SetColorTexture(0.08, 0.09, 0.10, 0.95)
 
--- FPS Text
-local fpsText = FastFPSandPingFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-fpsText:SetPoint("TOPLEFT", FastFPSandPingFrame, "TOPLEFT", 10, -25)  -- Positioned with some padding
+-- Border
+local innerBorder = CreateFrame("Frame", nil, FastFPSandPingFrame, BackdropTemplateMixin and "BackdropTemplate" or nil)
+innerBorder:SetPoint("TOPLEFT", 1, -1)
+innerBorder:SetPoint("BOTTOMRIGHT", -1, 1)
+innerBorder:SetBackdrop({ edgeFile = "Interface\\Buttons\\WHITE8x8", edgeSize = 1 })
+innerBorder:SetBackdropBorderColor(0, 0, 0, 1)
 
--- Server Ping Text
-local pingText = FastFPSandPingFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-pingText:SetPoint("TOPRIGHT", FastFPSandPingFrame, "TOPRIGHT", -10, -25)  -- Positioned with some padding
+-- Shadow
+local shadow = FastFPSandPingFrame:CreateTexture(nil, "BACKGROUND", nil, -1)
+shadow:SetPoint("TOPLEFT", -6, 6)
+shadow:SetPoint("BOTTOMRIGHT", 6, -6)
+shadow:SetTexture("Interface\\Buttons\\WHITE8x8")
+shadow:SetVertexColor(0, 0, 0, 0.35)
 
--- Memory Clear Button
-local clearMemoryButton = CreateFrame("Button", nil, FastFPSandPingFrame, "UIPanelButtonTemplate")
-clearMemoryButton:SetSize(180, 20)  -- Button size
-clearMemoryButton:SetPoint("BOTTOM", FastFPSandPingFrame, "BOTTOM", 0, 10)  -- Position button at the bottom
+-- Dünnere Titlebar
+local titlebar = FastFPSandPingFrame:CreateTexture(nil, "ARTWORK")
+titlebar:SetPoint("TOPLEFT", 0, 0)
+titlebar:SetPoint("TOPRIGHT", 0, 0)
+titlebar:SetHeight(24)
+titlebar:SetColorTexture(0.12, 0.14, 0.18, 1)
+
+-- Linie unter Titlebar
+local underline = FastFPSandPingFrame:CreateTexture(nil, "ARTWORK")
+underline:SetPoint("TOPLEFT", 0, -24)
+underline:SetPoint("TOPRIGHT", 0, -24)
+underline:SetHeight(1)
+underline:SetColorTexture(0, 0, 0, 1)
+
+-- Titeltext (kleiner & dezent)
+local titleFS = FastFPSandPingFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+titleFS:SetPoint("TOP", FastFPSandPingFrame, "TOP", 0, -5)
+titleFS:SetText(text.title)
+titleFS:SetJustifyH("CENTER")
+titleFS:SetTextColor(1, 1, 1, 0.9)
+titleFS:SetShadowColor(0, 0, 0, 1)
+titleFS:SetShadowOffset(1, -1)
+
+-- Close-Button (etwas tiefer und nach links)
+local closeBtn = CreateFrame("Button", nil, FastFPSandPingFrame, "UIPanelCloseButton")
+closeBtn:SetPoint("TOPRIGHT", -3, -3)  -- vorher (2,1)
+closeBtn:SetScale(0.85)
+
+-- Inhalt
+local content = CreateFrame("Frame", nil, FastFPSandPingFrame)
+content:SetPoint("TOPLEFT", 12, -36)
+content:SetPoint("BOTTOMRIGHT", -12, 12)
+
+-- Linie über Buttonbereich
+local contentLine = content:CreateTexture(nil, "ARTWORK")
+contentLine:SetPoint("BOTTOMLEFT", 0, 28)
+contentLine:SetPoint("BOTTOMRIGHT", 0, 28)
+contentLine:SetHeight(1)
+contentLine:SetColorTexture(0, 0, 0, 1)
+
+-- FPS links
+local fpsText = content:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+fpsText:SetPoint("TOPLEFT", 0, 0)
+fpsText:SetTextColor(0.9, 0.9, 0.9, 1)
+
+-- Ping rechts
+local pingText = content:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+pingText:SetPoint("TOPRIGHT", 0, 0)
+pingText:SetTextColor(0.9, 0.9, 0.9, 1)
+
+-- Button
+local clearMemoryButton = CreateFrame("Button", nil, content, "UIPanelButtonTemplate")
+clearMemoryButton:SetSize(180, 20)
+clearMemoryButton:SetPoint("BOTTOM", 0, 2)
 clearMemoryButton:SetText(text.clearMemoryButton)
 
--- OnClick script to clear memory
 clearMemoryButton:SetScript("OnClick", function()
     collectgarbage("collect")
     print(text.memoryClearedMessage)
 end)
 
--- Slash command to toggle the frame
+-- Slash command
 SLASH_FASTFPSANDPING1 = "/ffap"
-SlashCmdList["FASTFPSANDPING"] = function(msg)
+SlashCmdList["FASTFPSANDPING"] = function()
     if FastFPSandPingFrame:IsShown() then
         FastFPSandPingFrame:Hide()
         FastFPSandPingDB.isFrameShown = false
@@ -132,42 +171,36 @@ SlashCmdList["FASTFPSANDPING"] = function(msg)
     end
 end
 
--- Update function to refresh FPS and Ping
+-- Update FPS/Ping
 local function UpdateStats()
     local fps = GetFramerate()
     local _, _, latencyHome = GetNetStats()
 
-    -- FPS Color
     local fpsColor
-    if fps < 30 then
-        fpsColor = {1, 0, 0}  -- Rot für FPS unter 30
-    elseif fps < 60 then
-        fpsColor = {1, 1, 0}  -- Gelb für FPS zwischen 30 und 60
-    else
-        fpsColor = {0, 1, 0}  -- Grün für FPS über 60
-    end
+    if fps < 30 then fpsColor = {1, 0, 0}
+    elseif fps < 60 then fpsColor = {1, 1, 0}
+    else fpsColor = {0, 1, 0} end
 
-    -- Ping Color
     local pingColor
-    if latencyHome > 150 then
-        pingColor = {1, 0, 0}  -- Rot für Ping über 150 ms
-    elseif latencyHome > 100 then
-        pingColor = {1, 1, 0}  -- Gelb für Ping zwischen 100 und 150 ms
-    else
-        pingColor = {0, 1, 0}  -- Grün für Ping unter 100 ms
-    end
+    if latencyHome > 150 then pingColor = {1, 0, 0}
+    elseif latencyHome > 100 then pingColor = {1, 1, 0}
+    else pingColor = {0, 1, 0} end
 
-    -- Set FPS text
     fpsText:SetText(string.format("%s: %.1f", text.fpsText, fps))
-    fpsText:SetTextColor(unpack(fpsColor))  -- Setze die Farbe basierend auf fpsColor
-
-    -- Set Ping text
+    fpsText:SetTextColor(unpack(fpsColor))
     pingText:SetText(string.format("%s: %d ms", text.pingText, latencyHome))
-    pingText:SetTextColor(unpack(pingColor))  -- Setze die Farbe basierend auf pingColor
+    pingText:SetTextColor(unpack(pingColor))
 end
 
--- Update the frame every second
+-- OnUpdate: Fading & Refresh
 FastFPSandPingFrame:SetScript("OnUpdate", function(self, elapsed)
+    if FADE_WHILE_MOVING then
+        local alpha = (IsPlayerMoving() and not self:IsMouseOver()) and 0.5 or 1.0
+        if self:GetAlpha() ~= alpha then
+            self:SetAlpha(alpha)
+        end
+    end
+
     self.timeSinceLastUpdate = (self.timeSinceLastUpdate or 0) + elapsed
     if self.timeSinceLastUpdate >= 1 then
         UpdateStats()
@@ -175,20 +208,29 @@ FastFPSandPingFrame:SetScript("OnUpdate", function(self, elapsed)
     end
 end)
 
--- Event handling
-FastFPSandPing:SetScript("OnEvent", function(self, event, ...)
+-- Events
+FastFPSandPing:SetScript("OnEvent", function(self, event)
     if event == "PLAYER_LOGIN" then
-        -- Restore the frame's visibility state
+        if FastFPSandPingDB.isFrameShown == nil then
+            FastFPSandPingDB.isFrameShown = true
+        end
         if FastFPSandPingDB.isFrameShown then
             FastFPSandPingFrame:Show()
         else
             FastFPSandPingFrame:Hide()
         end
 
-        -- Restore the frame's position
         if FastFPSandPingDB.point then
-            FastFPSandPingFrame:SetPoint(FastFPSandPingDB.point, UIParent, FastFPSandPingDB.relativePoint, FastFPSandPingDB.xOfs, FastFPSandPingDB.yOfs)
+            FastFPSandPingFrame:ClearAllPoints()
+            FastFPSandPingFrame:SetPoint(
+                FastFPSandPingDB.point,
+                UIParent,
+                FastFPSandPingDB.relativePoint,
+                FastFPSandPingDB.xOfs,
+                FastFPSandPingDB.yOfs
+            )
         else
+            FastFPSandPingFrame:ClearAllPoints()
             FastFPSandPingFrame:SetPoint("CENTER")
         end
     end
