@@ -1,4 +1,4 @@
--- FastFPSandPing.lua (TWW-ready options + account gold)
+-- FastFPSandPing.lua (TWW-ready options + account/char gold switch)
 -- SavedVariables: FastFPSandPingDB
 
 -- -------------------------
@@ -9,7 +9,11 @@ L["enUS"] = {
     title = "Fast FPS and Ping",
     fpsText = "FPS",
     pingText = "Ping",
-    goldText = "Account Gold",
+    goldText = "Gold",
+    goldMode = "Gold mode",
+    goldModeAccount = "Account",
+    goldModeChar = "Character",
+
     clearMemoryButton = "Clear Memory",
     memoryClearedMessage = "|cFFFF0000Memory cleared|r",
 
@@ -17,17 +21,21 @@ L["enUS"] = {
     showFrame = "Show window",
     showFPS = "Show FPS",
     showPing = "Show Ping",
-    showGold = "Show account gold",
+    showGold = "Show gold",
     fadeWhileMoving = "Fade while moving",
     showMinimapButton = "Show minimap button",
     resetPosition = "Reset window position",
-    tipGold = "Sums gold from characters you've logged in with on this account (stored locally).",
+    tipGold = "Shows gold and lets you switch between Account and Character (account total stored locally).",
 }
 L["deDE"] = {
     title = "Fast FPS and Ping",
     fpsText = "FPS",
     pingText = "Ping",
-    goldText = "Account-Gold",
+    goldText = "Gold",
+    goldMode = "Gold-Modus",
+    goldModeAccount = "Account",
+    goldModeChar = "Charakter",
+
     clearMemoryButton = "Speicher leeren",
     memoryClearedMessage = "|cFFFF0000Speicher geleert|r",
 
@@ -35,157 +43,187 @@ L["deDE"] = {
     showFrame = "Fenster anzeigen",
     showFPS = "FPS anzeigen",
     showPing = "Ping anzeigen",
-    showGold = "Account-Gold anzeigen",
+    showGold = "Gold anzeigen",
     fadeWhileMoving = "Beim Bewegen ausblenden",
     showMinimapButton = "Minikarten-Button anzeigen",
     resetPosition = "Fensterposition zurücksetzen",
-    tipGold = "Addiert Gold von Charakteren, mit denen du auf diesem Account eingeloggt warst (lokal gespeichert).",
-
-
+    tipGold = "Zeigt Gold an und erlaubt das Umschalten zwischen Account & Charakter (Account-Summe lokal gespeichert).",
 }
 
 L["frFR"] = {
     title = "Fast FPS and Ping",
     fpsText = "FPS",
     pingText = "Ping",
-    goldText = "Or du compte",
+    goldText = "Or",
+    goldMode = "Mode d’or",
+    goldModeAccount = "Compte",
+    goldModeChar = "Personnage",
+
     clearMemoryButton = "Effacer la mémoire",
     memoryClearedMessage = "|cFFFF0000Mémoire effacée|r",
     optionsTitle = "Options",
     showFrame = "Afficher la fenêtre",
     showFPS = "Afficher les FPS",
     showPing = "Afficher le ping",
-    showGold = "Afficher l’or du compte",
+    showGold = "Afficher l’or",
     fadeWhileMoving = "Atténuer en déplacement",
     showMinimapButton = "Afficher le bouton de la mini-carte",
     resetPosition = "Réinitialiser la position",
-    tipGold = "Additionne l’or des personnages avec lesquels tu t’es connecté sur ce compte (stocké localement).",
+    tipGold = "Affiche l’or et permet de basculer entre Compte et Personnage (total du compte stocké localement).",
 }
 
 L["esES"] = {
     title = "Fast FPS and Ping",
     fpsText = "FPS",
     pingText = "Ping",
-    goldText = "Oro de la cuenta",
+    goldText = "Oro",
+    goldMode = "Modo de oro",
+    goldModeAccount = "Cuenta",
+    goldModeChar = "Personaje",
+
     clearMemoryButton = "Borrar memoria",
     memoryClearedMessage = "|cFFFF0000Memoria borrada|r",
     optionsTitle = "Opciones",
     showFrame = "Mostrar ventana",
     showFPS = "Mostrar FPS",
     showPing = "Mostrar ping",
-    showGold = "Mostrar oro de la cuenta",
+    showGold = "Mostrar oro",
     fadeWhileMoving = "Atenuar al moverte",
     showMinimapButton = "Mostrar botón del minimapa",
     resetPosition = "Restablecer posición",
-    tipGold = "Suma el oro de los personajes con los que has iniciado sesión en esta cuenta (guardado localmente).",
+    tipGold = "Muestra el oro y permite cambiar entre Cuenta y Personaje (total de cuenta guardado localmente).",
 }
 
 L["itIT"] = {
     title = "Fast FPS and Ping",
     fpsText = "FPS",
     pingText = "Ping",
-    goldText = "Oro account",
+    goldText = "Oro",
+    goldMode = "Modalità oro",
+    goldModeAccount = "Account",
+    goldModeChar = "Personaggio",
+
     clearMemoryButton = "Cancella memoria",
     memoryClearedMessage = "|cFFFF0000Memoria cancellata|r",
     optionsTitle = "Opzioni",
     showFrame = "Mostra finestra",
     showFPS = "Mostra FPS",
     showPing = "Mostra ping",
-    showGold = "Mostra oro dell’account",
+    showGold = "Mostra oro",
     fadeWhileMoving = "Dissolvi mentre ti muovi",
     showMinimapButton = "Mostra pulsante minimappa",
     resetPosition = "Reimposta posizione",
-    tipGold = "Somma l’oro dei personaggi con cui hai effettuato l’accesso su questo account (salvato localmente).",
+    tipGold = "Mostra l’oro e permette di passare tra Account e Personaggio (totale account salvato localmente).",
 }
 
 L["ptBR"] = {
     title = "Fast FPS and Ping",
     fpsText = "FPS",
     pingText = "Ping",
-    goldText = "Ouro da conta",
+    goldText = "Ouro",
+    goldMode = "Modo de ouro",
+    goldModeAccount = "Conta",
+    goldModeChar = "Personagem",
+
     clearMemoryButton = "Limpar memória",
     memoryClearedMessage = "|cFFFF0000Memória limpa|r",
     optionsTitle = "Opções",
     showFrame = "Mostrar janela",
     showFPS = "Mostrar FPS",
     showPing = "Mostrar ping",
-    showGold = "Mostrar ouro da conta",
+    showGold = "Mostrar ouro",
     fadeWhileMoving = "Esmaecer ao mover",
     showMinimapButton = "Mostrar botão do minimapa",
     resetPosition = "Redefinir posição",
-    tipGold = "Soma o ouro dos personagens com os quais você entrou nesta conta (salvo localmente).",
+    tipGold = "Mostra o ouro e permite alternar entre Conta e Personagem (total da conta salvo localmente).",
 }
 
 L["ruRU"] = {
     title = "Fast FPS and Ping",
     fpsText = "FPS",
     pingText = "Пинг",
-    goldText = "Золото аккаунта",
+    goldText = "Золото",
+    goldMode = "Режим золота",
+    goldModeAccount = "Аккаунт",
+    goldModeChar = "Персонаж",
+
     clearMemoryButton = "Очистить память",
     memoryClearedMessage = "|cFFFF0000Память очищена|r",
     optionsTitle = "Настройки",
     showFrame = "Показывать окно",
     showFPS = "Показывать FPS",
     showPing = "Показывать пинг",
-    showGold = "Показывать золото аккаунта",
+    showGold = "Показывать золото",
     fadeWhileMoving = "Скрывать при движении",
     showMinimapButton = "Показывать кнопку на миникарте",
     resetPosition = "Сбросить позицию",
-    tipGold = "Суммирует золото персонажей, которыми вы входили в этот аккаунт (хранится локально).",
+    tipGold = "Показывает золото и позволяет переключаться между Аккаунтом и Персонажем (сумма аккаунта хранится локально).",
 }
 
 L["koKR"] = {
     title = "Fast FPS and Ping",
     fpsText = "FPS",
     pingText = "핑",
-    goldText = "계정 골드",
+    goldText = "골드",
+    goldMode = "골드 모드",
+    goldModeAccount = "계정",
+    goldModeChar = "캐릭터",
+
     clearMemoryButton = "기록 초기화",
     memoryClearedMessage = "|cFFFF0000기록이 초기화되었습니다|r",
     optionsTitle = "옵션",
     showFrame = "창 표시",
     showFPS = "FPS 표시",
     showPing = "핑 표시",
-    showGold = "계정 골드 표시",
+    showGold = "골드 표시",
     fadeWhileMoving = "이동 중 흐리게",
     showMinimapButton = "미니맵 버튼 표시",
     resetPosition = "위치 초기화",
-    tipGold = "이 계정으로 접속한 캐릭터들의 골드를 합산합니다 (로컬 저장).",
+    tipGold = "골드를 표시하고 계정/캐릭터 사이를 전환합니다 (계정 합계는 로컬 저장).",
 }
 
 L["zhCN"] = {
     title = "Fast FPS and Ping",
     fpsText = "FPS",
     pingText = "延迟",
-    goldText = "账号金币",
+    goldText = "金币",
+    goldMode = "金币模式",
+    goldModeAccount = "账号",
+    goldModeChar = "角色",
+
     clearMemoryButton = "清空记录",
     memoryClearedMessage = "|cFFFF0000记录已清空|r",
     optionsTitle = "选项",
     showFrame = "显示窗口",
     showFPS = "显示FPS",
     showPing = "显示延迟",
-    showGold = "显示账号金币",
+    showGold = "显示金币",
     fadeWhileMoving = "移动时淡出",
     showMinimapButton = "显示小地图按钮",
     resetPosition = "重置位置",
-    tipGold = "统计你在此账号上登录过的角色金币总和（本地保存）。",
+    tipGold = "显示金币并可在账号/角色之间切换（账号总额本地保存）。",
 }
 
 L["zhTW"] = {
     title = "Fast FPS and Ping",
     fpsText = "FPS",
     pingText = "延遲",
-    goldText = "帳號金幣",
+    goldText = "金幣",
+    goldMode = "金幣模式",
+    goldModeAccount = "帳號",
+    goldModeChar = "角色",
+
     clearMemoryButton = "清除記錄",
     memoryClearedMessage = "|cFFFF0000記錄已清除|r",
     optionsTitle = "選項",
     showFrame = "顯示視窗",
     showFPS = "顯示FPS",
     showPing = "顯示延遲",
-    showGold = "顯示帳號金幣",
+    showGold = "顯示金幣",
     fadeWhileMoving = "移動時淡出",
     showMinimapButton = "顯示小地圖按鈕",
     resetPosition = "重置位置",
-    tipGold = "會加總你在此帳號登入過的角色金幣（本機儲存）。",
+    tipGold = "顯示金幣並可在帳號/角色之間切換（帳號總額本機儲存）。",
 }
 
 -- Locale aliases
@@ -208,6 +246,7 @@ local DEFAULTS = {
     showFPS = true,
     showPing = true,
     showGold = true,
+    goldMode = "ACCOUNT", -- NEW: "ACCOUNT" or "CHAR"
     fadeWhileMoving = true,
     showMinimapButton = true,
     minimapPos = 45, -- used by minimap button lua/xml
@@ -255,6 +294,14 @@ local function GetAccountGoldTotal()
         end
     end
     return total
+end
+
+-- NEW: use selected mode (Account or Character)
+local function GetSelectedGold()
+    if FastFPSandPingDB.goldMode == "CHAR" then
+        return GetMoney() or 0
+    end
+    return GetAccountGoldTotal()
 end
 
 -- NEW: Tausenderpunkt + Split in g/s/c
@@ -361,8 +408,7 @@ contentLine:SetColorTexture(0, 0, 0, 1)
 local fpsText = content:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 local pingText = content:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 
--- Account gold line
--- Account gold line (3 FontStrings for real coloring)
+-- Gold line (3 FontStrings for real coloring)
 local goldLabel  = content:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 local goldGold   = content:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 local goldSilver = content:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
@@ -389,17 +435,17 @@ end)
 local function ApplyLayout()
     fpsText:ClearAllPoints()
     pingText:ClearAllPoints()
-	goldLabel:ClearAllPoints()
-	goldGold:ClearAllPoints()
-	goldSilver:ClearAllPoints()
-	goldCopper:ClearAllPoints()
+    goldLabel:ClearAllPoints()
+    goldGold:ClearAllPoints()
+    goldSilver:ClearAllPoints()
+    goldCopper:ClearAllPoints()
 
     fpsText:Hide()
     pingText:Hide()
-	goldLabel:Hide()
-	goldGold:Hide()
-	goldSilver:Hide()
-	goldCopper:Hide()
+    goldLabel:Hide()
+    goldGold:Hide()
+    goldSilver:Hide()
+    goldCopper:Hide()
 
     local y = 0
 
@@ -418,8 +464,12 @@ local function ApplyLayout()
     end
 
     if FastFPSandPingDB.showGold then
-		goldLabel:SetPoint("TOPLEFT", 0, y)
-        goldLabel:SetText(text.goldText .. ":")
+        local modeLabel = (FastFPSandPingDB.goldMode == "CHAR")
+            and (text.goldModeChar or "Character")
+            or  (text.goldModeAccount or "Account")
+
+        goldLabel:SetPoint("TOPLEFT", 0, y)
+        goldLabel:SetText((text.goldText or "Gold") .. " (" .. modeLabel .. "):")
         goldLabel:Show()
 
         goldGold:SetPoint("LEFT", goldLabel, "RIGHT", 6, 0)
@@ -460,8 +510,8 @@ local function UpdateStats()
     end
 
     if FastFPSandPingDB.showGold then
-		local total = GetAccountGoldTotal()
-        local g, s, c = SplitMoney(total)
+        local amount = GetSelectedGold()
+        local g, s, c = SplitMoney(amount)
 
         goldGold:SetText(FormatThousandsDot(g) .. "g")
         goldSilver:SetText(string.format("%02ds", s))
@@ -526,6 +576,56 @@ local function CreateButton(parent, label, x, y, onClick)
     return btn
 end
 
+-- NEW: Dropdown for gold mode (Account/Character)
+local function CreateGoldModeDropdown(parent, x, y)
+    local label = parent:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+    label:SetPoint("TOPLEFT", x, y)
+    label:SetText((text.goldMode or "Gold mode") .. ":")
+
+    local dd = CreateFrame("Frame", nil, parent, "UIDropDownMenuTemplate")
+    dd:SetPoint("TOPLEFT", label, "BOTTOMLEFT", -16, -2) -- -16 padding for template
+
+    local function UpdateLabel()
+        if FastFPSandPingDB.goldMode == "CHAR" then
+            UIDropDownMenu_SetText(dd, text.goldModeChar or "Character")
+        else
+            UIDropDownMenu_SetText(dd, text.goldModeAccount or "Account")
+        end
+    end
+
+    UIDropDownMenu_Initialize(dd, function(self, level)
+        local info = UIDropDownMenu_CreateInfo()
+
+        info.text = text.goldModeAccount or "Account"
+        info.checked = (FastFPSandPingDB.goldMode ~= "CHAR")
+        info.func = function()
+            FastFPSandPingDB.goldMode = "ACCOUNT"
+            UpdateLabel()
+            ApplyLayout()
+            UpdateStats()
+        end
+        UIDropDownMenu_AddButton(info, level)
+
+        info = UIDropDownMenu_CreateInfo()
+        info.text = text.goldModeChar or "Character"
+        info.checked = (FastFPSandPingDB.goldMode == "CHAR")
+        info.func = function()
+            FastFPSandPingDB.goldMode = "CHAR"
+            UpdateLabel()
+            ApplyLayout()
+            UpdateStats()
+        end
+        UIDropDownMenu_AddButton(info, level)
+    end)
+
+    dd.Refresh = function()
+        UpdateLabel()
+    end
+
+    UpdateLabel()
+    return dd
+end
+
 local function CreateOptionsPanel()
     optionsPanel = CreateFrame("Frame", "FastFPSandPingOptionsPanel", UIParent)
     optionsPanel.name = text.title
@@ -575,6 +675,10 @@ local function CreateOptionsPanel()
         end
     ); y = y - 28
 
+    -- NEW: Gold mode dropdown under the gold checkbox
+    local ddGoldMode = CreateGoldModeDropdown(optionsPanel, 16, y)
+    y = y - 56
+
     local cbFade = CreateCheckbox(optionsPanel, text.fadeWhileMoving, nil, 16, y,
         function() return FastFPSandPingDB.fadeWhileMoving end,
         function(v)
@@ -598,6 +702,7 @@ local function CreateOptionsPanel()
 
     optionsPanel.Refresh = function()
         cbShowFrame.Refresh(); cbFPS.Refresh(); cbPing.Refresh(); cbGold.Refresh(); cbFade.Refresh(); cbMini.Refresh()
+        if ddGoldMode and ddGoldMode.Refresh then ddGoldMode.Refresh() end
     end
 
     -- Register in modern Settings UI if available, else classic InterfaceOptions
