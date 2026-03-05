@@ -1,5 +1,3 @@
-local AceGUI = LibStub("AceGUI-3.0")
-
 -- Lokalisierte Texte für verschiedene Sprachen
 local localizedTexts = {
     enUS = {

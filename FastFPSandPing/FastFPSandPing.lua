@@ -19,6 +19,8 @@ L["enUS"] = {
 
     optionsTitle = "Options",
     showFrame = "Show window",
+    lockWindow = "Lock window",
+    tipLockWindow = "Prevents moving the window.",
     showFPS = "Show FPS",
     showPing = "Show Ping",
     showGold = "Show gold",
@@ -41,6 +43,8 @@ L["deDE"] = {
 
     optionsTitle = "Optionen",
     showFrame = "Fenster anzeigen",
+    lockWindow = "Fenster sperren",
+    tipLockWindow = "Verhindert, dass du das Fenster verschieben kannst.",
     showFPS = "FPS anzeigen",
     showPing = "Ping anzeigen",
     showGold = "Gold anzeigen",
@@ -63,6 +67,8 @@ L["frFR"] = {
     memoryClearedMessage = "|cFFFF0000Mémoire effacée|r",
     optionsTitle = "Options",
     showFrame = "Afficher la fenêtre",
+    lockWindow = "Verrouiller la fenêtre",
+    tipLockWindow = "Empêche de déplacer la fenêtre.",
     showFPS = "Afficher les FPS",
     showPing = "Afficher le ping",
     showGold = "Afficher l’or",
@@ -85,6 +91,8 @@ L["esES"] = {
     memoryClearedMessage = "|cFFFF0000Memoria borrada|r",
     optionsTitle = "Opciones",
     showFrame = "Mostrar ventana",
+    lockWindow = "Bloquear ventana",
+    tipLockWindow = "Evita mover la ventana.",
     showFPS = "Mostrar FPS",
     showPing = "Mostrar ping",
     showGold = "Mostrar oro",
@@ -107,6 +115,8 @@ L["itIT"] = {
     memoryClearedMessage = "|cFFFF0000Memoria cancellata|r",
     optionsTitle = "Opzioni",
     showFrame = "Mostra finestra",
+    lockWindow = "Blocca finestra",
+    tipLockWindow = "Impedisce di spostare la finestra.",
     showFPS = "Mostra FPS",
     showPing = "Mostra ping",
     showGold = "Mostra oro",
@@ -129,6 +139,8 @@ L["ptBR"] = {
     memoryClearedMessage = "|cFFFF0000Memória limpa|r",
     optionsTitle = "Opções",
     showFrame = "Mostrar janela",
+    lockWindow = "Bloquear janela",
+    tipLockWindow = "Impede mover a janela.",
     showFPS = "Mostrar FPS",
     showPing = "Mostrar ping",
     showGold = "Mostrar ouro",
@@ -151,6 +163,8 @@ L["ruRU"] = {
     memoryClearedMessage = "|cFFFF0000Память очищена|r",
     optionsTitle = "Настройки",
     showFrame = "Показывать окно",
+    lockWindow = "Заблокировать окно",
+    tipLockWindow = "Запрещает перемещать окно.",
     showFPS = "Показывать FPS",
     showPing = "Показывать пинг",
     showGold = "Показывать золото",
@@ -173,6 +187,8 @@ L["koKR"] = {
     memoryClearedMessage = "|cFFFF0000기록이 초기화되었습니다|r",
     optionsTitle = "옵션",
     showFrame = "창 표시",
+    lockWindow = "창 잠금",
+    tipLockWindow = "창을 이동할 수 없도록 합니다.",
     showFPS = "FPS 표시",
     showPing = "핑 표시",
     showGold = "골드 표시",
@@ -195,6 +211,8 @@ L["zhCN"] = {
     memoryClearedMessage = "|cFFFF0000记录已清空|r",
     optionsTitle = "选项",
     showFrame = "显示窗口",
+    lockWindow = "锁定窗口",
+    tipLockWindow = "防止移动窗口。",
     showFPS = "显示FPS",
     showPing = "显示延迟",
     showGold = "显示金币",
@@ -217,6 +235,8 @@ L["zhTW"] = {
     memoryClearedMessage = "|cFFFF0000記錄已清除|r",
     optionsTitle = "選項",
     showFrame = "顯示視窗",
+    lockWindow = "鎖定視窗",
+    tipLockWindow = "防止移動視窗。",
     showFPS = "顯示FPS",
     showPing = "顯示延遲",
     showGold = "顯示金幣",
@@ -249,6 +269,7 @@ local DEFAULTS = {
     goldMode = "ACCOUNT", -- NEW: "ACCOUNT" or "CHAR"
     fadeWhileMoving = true,
     showMinimapButton = true,
+    lockWindow = false,
     minimapPos = 45, -- used by minimap button lua/xml
     goldPerChar = {}, -- [realm] = { [name] = copper }
 }
@@ -335,7 +356,10 @@ FastFPSandPingFrame:RegisterForDrag("LeftButton")
 FastFPSandPingFrame:SetClampedToScreen(true)
 FastFPSandPingFrame:SetFrameStrata("MEDIUM")
 
-FastFPSandPingFrame:SetScript("OnDragStart", FastFPSandPingFrame.StartMoving)
+FastFPSandPingFrame:SetScript("OnDragStart", function(self)
+    if FastFPSandPingDB.lockWindow then return end
+    self:StartMoving()
+end)
 FastFPSandPingFrame:SetScript("OnDragStop", function(self)
     self:StopMovingOrSizing()
     local point, _, relativePoint, xOfs, yOfs = self:GetPoint()
@@ -344,6 +368,9 @@ FastFPSandPingFrame:SetScript("OnDragStop", function(self)
     FastFPSandPingDB.xOfs = xOfs
     FastFPSandPingDB.yOfs = yOfs
 end)
+local function ApplyWindowLock()
+    -- Dragging is blocked by the OnDragStart check when lockWindow is true.
+end
 
 -- Background
 local bg = FastFPSandPingFrame:CreateTexture(nil, "BACKGROUND")
@@ -648,6 +675,14 @@ local function CreateOptionsPanel()
         end
     ); y = y - 28
 
+    local cbLockWindow = CreateCheckbox(optionsPanel, text.lockWindow, text.tipLockWindow, 16, y,
+        function() return FastFPSandPingDB.lockWindow end,
+        function(v)
+            FastFPSandPingDB.lockWindow = v
+            ApplyWindowLock()
+        end
+    ); y = y - 28
+
     local cbFPS = CreateCheckbox(optionsPanel, text.showFPS, nil, 16, y,
         function() return FastFPSandPingDB.showFPS end,
         function(v)
@@ -701,7 +736,7 @@ local function CreateOptionsPanel()
     end)
 
     optionsPanel.Refresh = function()
-        cbShowFrame.Refresh(); cbFPS.Refresh(); cbPing.Refresh(); cbGold.Refresh(); cbFade.Refresh(); cbMini.Refresh()
+        cbShowFrame.Refresh(); cbLockWindow.Refresh(); cbFPS.Refresh(); cbPing.Refresh(); cbGold.Refresh(); cbFade.Refresh(); cbMini.Refresh()
         if ddGoldMode and ddGoldMode.Refresh then ddGoldMode.Refresh() end
     end
 
