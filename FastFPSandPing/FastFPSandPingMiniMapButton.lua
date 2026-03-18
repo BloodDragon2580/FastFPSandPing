@@ -1,76 +1,167 @@
--- Lokalisierte Texte für verschiedene Sprachen
+-- FastFPSandPing minimap button via LibDataBroker + LibDBIcon
+
 local localizedTexts = {
     enUS = {
-        FFPSLinks = "Click left to open the FPS and Ping display.",
-        FFPSRechts = "Hold right-click to move the Minimap button.",
+        left = "Left-click to show or hide the FPS and Ping window.",
+        right = "Right-click to open the options.",
+        drag = "Drag to move the minimap button.",
+        title = "Fast FPS and Ping",
     },
     deDE = {
-        FFPSLinks = "Zum Öffnen der FPS- und Ping-Anzeige links klicken.",
-        FFPSRechts = "Rechtsklick halten, um den Minikarten-Button zu verschieben.",
+        left = "Linksklick zeigt oder versteckt das FPS- und Ping-Fenster.",
+        right = "Rechtsklick öffnet die Optionen.",
+        drag = "Zum Verschieben den Minikarten-Button ziehen.",
+        title = "Fast FPS and Ping",
     },
     frFR = {
-        FFPSLinks = "Cliquez à gauche pour ouvrir l'affichage FPS et Ping.",
-        FFPSRechts = "Maintenez le clic droit pour déplacer le bouton de la Minimap.",
+        left = "Clic gauche pour afficher ou masquer la fenêtre FPS et Ping.",
+        right = "Clic droit pour ouvrir les options.",
+        drag = "Faites glisser pour déplacer le bouton de la mini-carte.",
+        title = "Fast FPS and Ping",
     },
     esES = {
-        FFPSLinks = "Haz clic a la izquierda para abrir la visualización de FPS et Ping.",
-        FFPSRechts = "Mantén presionado el botón derecho para mover el botón del minimapa.",
+        left = "Haz clic izquierdo para mostrar u ocultar la ventana de FPS y Ping.",
+        right = "Haz clic derecho para abrir las opciones.",
+        drag = "Arrastra para mover el botón del minimapa.",
+        title = "Fast FPS and Ping",
     },
     itIT = {
-        FFPSLinks = "Clicca a sinistra per aprire la visualizzazione di FPS e Ping.",
-        FFPSRechts = "Tieni premuto il tasto destro per spostare il pulsante della minimappa.",
-    },
-    ruRU = {
-        FFPSLinks = "Щелкните левой кнопкой, чтобы открыть отображение FPS и Ping.",
-        FFPSRechts = "Удерживайте правую кнопку мыши, чтобы переместить кнопку миникарты.",
-    },
-    zhCN = {
-        FFPSLinks = "点击左侧以打开FPS和Ping显示。",
-        FFPSRechts = "按住右键以移动小地图按钮。",
-    },
-    zhTW = {
-        FFPSLinks = "點擊左側以打開FPS和Ping顯示。",
-        FFPSRechts = "按住右鍵以移動小地圖按鈕。",
-    },
-    koKR = {
-        FFPSLinks = "왼쪽 클릭하여 FPS 및 핑 표시를 엽니다.",
-        FFPSRechts = "오른쪽 클릭을 유지하여 미니맵 버튼을 이동합니다.",
+        left = "Clic sinistro per mostrare o nascondere la finestra FPS e Ping.",
+        right = "Clic destro per aprire le opzioni.",
+        drag = "Trascina per spostare il pulsante della minimappa.",
+        title = "Fast FPS and Ping",
     },
     ptBR = {
-        FFPSLinks = "Clique à esquerda para abrir a exibição de FPS e Ping.",
-        FFPSRechts = "Mantenha o clique direito para mover o botão do minimapa.",
+        left = "Clique esquerdo para mostrar ou ocultar a janela de FPS e Ping.",
+        right = "Clique direito para abrir as opções.",
+        drag = "Arraste para mover o botão do minimapa.",
+        title = "Fast FPS and Ping",
     },
-    -- Weitere Sprachen können hier hinzugefügt werden
+    ruRU = {
+        left = "Левый клик показывает или скрывает окно FPS и пинга.",
+        right = "Правый клик открывает настройки.",
+        drag = "Перетащите, чтобы переместить кнопку миникарты.",
+        title = "Fast FPS and Ping",
+    },
+    koKR = {
+        left = "왼쪽 클릭으로 FPS 및 핑 창을 표시하거나 숨깁니다.",
+        right = "오른쪽 클릭으로 옵션을 엽니다.",
+        drag = "드래그하여 미니맵 버튼을 이동합니다.",
+        title = "Fast FPS and Ping",
+    },
+    zhCN = {
+        left = "左键点击可显示或隐藏 FPS 和延迟窗口。",
+        right = "右键点击可打开选项。",
+        drag = "拖动以移动小地图按钮。",
+        title = "Fast FPS and Ping",
+    },
+    zhTW = {
+        left = "左鍵點擊可顯示或隱藏 FPS 與延遲視窗。",
+        right = "右鍵點擊可開啟選項。",
+        drag = "拖曳以移動小地圖按鈕。",
+        title = "Fast FPS and Ping",
+    },
 }
 
--- Bestimme die aktuelle Sprache
 local locale = GetLocale()
+local text = localizedTexts[locale] or localizedTexts.enUS
 
--- Setze die Standardwerte, falls die Sprache nicht definiert ist
-_G["FFPSlinksText"] = localizedTexts[locale] and localizedTexts[locale].FFPSLinks or "Click left to open the FPS and Ping display."
-_G["FFPSrechtsText"] = localizedTexts[locale] and localizedTexts[locale].FFPSRechts or "Hold right-click to move the Minimap button."
+local ADDON_NAME = "FastFPSandPing"
+local ICON_PATH = "Interface\\Icons\\INV_Misc_Wrench_01"
 
-FastFPSandPing_Settings = {
-	MinimapPos = 45
-}
+local LibStub = _G.LibStub
+local LDB = LibStub and LibStub("LibDataBroker-1.1", true)
+local LDBIcon = LibStub and LibStub("LibDBIcon-1.0", true)
 
-function FastFPSandPing_MinimapButton_Reposition()
-	FastFPSandPing_MinimapButton:SetPoint("TOPLEFT","Minimap","TOPLEFT",52-(80*cos(FastFPSandPing_Settings.MinimapPos)),(80*sin(FastFPSandPing_Settings.MinimapPos))-52)
+local dataObject
+local isRegistered = false
+
+local function EnsureMinimapDB()
+    FastFPSandPingDB = FastFPSandPingDB or {}
+
+    if type(FastFPSandPingDB.minimap) ~= "table" then
+        FastFPSandPingDB.minimap = {}
+    end
+
+    if FastFPSandPingDB.minimap.minimapPos == nil then
+        FastFPSandPingDB.minimap.minimapPos = FastFPSandPingDB.minimapPos or 45
+    end
+
+    if FastFPSandPingDB.showMinimapButton == nil then
+        FastFPSandPingDB.showMinimapButton = true
+    end
+
+    if FastFPSandPingDB.minimap.hide == nil then
+        FastFPSandPingDB.minimap.hide = not FastFPSandPingDB.showMinimapButton
+    end
 end
 
-function FastFPSandPing_MinimapButton_DraggingFrame_OnUpdate()
+local function ToggleMainWindow()
+    local frame = _G.FastFPSandPingFrame
+    if not frame then return end
 
-	local xpos,ypos = GetCursorPosition()
-	local xmin,ymin = Minimap:GetLeft(), Minimap:GetBottom()
-
-	xpos = xmin-xpos/UIParent:GetScale()+70
-	ypos = ypos/UIParent:GetScale()-ymin-70
-
-	FastFPSandPing_Settings.MinimapPos = math.deg(math.atan2(ypos,xpos))
-	FastFPSandPing_MinimapButton_Reposition()
+    if frame:IsShown() then
+        frame:Hide()
+        FastFPSandPingDB.isFrameShown = false
+    else
+        frame:Show()
+        FastFPSandPingDB.isFrameShown = true
+    end
 end
 
-function FastFPSandPing_MinimapButton_OnClick()
-	DEFAULT_CHAT_FRAME.editBox:SetText("/ffap") 
-	ChatEdit_SendText(DEFAULT_CHAT_FRAME.editBox, 0)
+local function OpenOptions()
+    if SlashCmdList and SlashCmdList["FASTFPSANDPING"] then
+        SlashCmdList["FASTFPSANDPING"]("options")
+    end
+end
+
+local function EnsureDataObject()
+    if dataObject or not LDB then return end
+
+    dataObject = LDB:NewDataObject(ADDON_NAME, {
+        type = "launcher",
+        icon = ICON_PATH,
+        label = text.title,
+        OnClick = function(_, button)
+            if button == "RightButton" then
+                OpenOptions()
+            else
+                ToggleMainWindow()
+            end
+        end,
+        OnTooltipShow = function(tooltip)
+            if not tooltip or not tooltip.AddLine then return end
+            tooltip:AddLine(text.title)
+            tooltip:AddLine(text.left, 1, 1, 1)
+            tooltip:AddLine(text.right, 1, 1, 1)
+            tooltip:AddLine(text.drag, 0.8, 0.8, 0.8)
+        end,
+    })
+end
+
+function FastFPSandPing_RegisterMinimapButton()
+    if not (LDB and LDBIcon) then return end
+
+    EnsureMinimapDB()
+    EnsureDataObject()
+
+    if not isRegistered then
+        LDBIcon:Register(ADDON_NAME, dataObject, FastFPSandPingDB.minimap)
+        isRegistered = true
+    end
+end
+
+function FastFPSandPing_ApplyMinimapButtonState()
+    if not (LDB and LDBIcon) then return end
+
+    EnsureMinimapDB()
+    FastFPSandPing_RegisterMinimapButton()
+
+    FastFPSandPingDB.minimap.hide = not FastFPSandPingDB.showMinimapButton
+
+    if FastFPSandPingDB.showMinimapButton then
+        LDBIcon:Show(ADDON_NAME)
+    else
+        LDBIcon:Hide(ADDON_NAME)
+    end
 end

@@ -270,7 +270,11 @@ local DEFAULTS = {
     fadeWhileMoving = true,
     showMinimapButton = true,
     lockWindow = false,
-    minimapPos = 45, -- used by minimap button lua/xml
+    minimapPos = 45, -- legacy value kept for migration
+    minimap = {
+        hide = false,
+        minimapPos = 45,
+    },
     goldPerChar = {}, -- [realm] = { [name] = copper }
 }
 
@@ -547,15 +551,24 @@ local function UpdateStats()
 end
 
 -- -------------------------
--- Minimap Button visibility (XML button)
+-- Minimap Button visibility (LibDBIcon)
 -- -------------------------
 local function ApplyMinimapButtonState()
-    if _G.FastFPSandPing_MinimapButton then
-        if FastFPSandPingDB.showMinimapButton then
-            _G.FastFPSandPing_MinimapButton:Show()
-        else
-            _G.FastFPSandPing_MinimapButton:Hide()
-        end
+    if type(FastFPSandPingDB.minimap) ~= "table" then
+        FastFPSandPingDB.minimap = {}
+    end
+    if FastFPSandPingDB.minimap.minimapPos == nil then
+        FastFPSandPingDB.minimap.minimapPos = FastFPSandPingDB.minimapPos or 45
+    end
+    if FastFPSandPingDB.minimap.hide == nil then
+        FastFPSandPingDB.minimap.hide = not FastFPSandPingDB.showMinimapButton
+    end
+
+    if type(FastFPSandPing_RegisterMinimapButton) == "function" then
+        FastFPSandPing_RegisterMinimapButton()
+    end
+    if type(FastFPSandPing_ApplyMinimapButtonState) == "function" then
+        FastFPSandPing_ApplyMinimapButtonState()
     end
 end
 
@@ -795,6 +808,17 @@ end)
 FastFPSandPing:SetScript("OnEvent", function(self, event)
     if event == "PLAYER_LOGIN" then
         CopyDefaults(FastFPSandPingDB, DEFAULTS)
+
+        -- migrate old minimap settings to LibDBIcon DB
+        if type(FastFPSandPingDB.minimap) ~= "table" then
+            FastFPSandPingDB.minimap = {}
+        end
+        if FastFPSandPingDB.minimap.minimapPos == nil then
+            FastFPSandPingDB.minimap.minimapPos = FastFPSandPingDB.minimapPos or 45
+        end
+        if FastFPSandPingDB.minimap.hide == nil then
+            FastFPSandPingDB.minimap.hide = not FastFPSandPingDB.showMinimapButton
+        end
 
         -- ensure options exist
         if not optionsPanel then
